@@ -6,6 +6,8 @@
 from tkinter import *
 from tkinter import ttk # Library adds widgets which can be added to the window
 
+from math import sqrt
+
 # Important Variables
 TITLE = 'A Simple Calculator'
 SIZE = '320x500'
@@ -61,8 +63,86 @@ add.config(width=3, font=('Courier', 24))
 
 # Second row of buttons
 row2 = Frame(window, background=BGCOLOR)
-row2.pack(side=TOP, pady=2, fill=X)
+row2.pack(side=TOP, pady=10, padx=5, fill=X)
 
+number7 = Button(row2, text='7', bg='#006633', fg='#000000')
+number7.pack(side=LEFT, padx=BUTTONXPAD)
+number7.config(width=3, font=('Courier', 24))
+
+number8 = Button(row2, text='8', bg='#006633', fg='#000000')
+number8.pack(side=LEFT, padx=BUTTONXPAD)
+number8.config(width=3, font=('Courier', 24))
+
+number9 = Button(row2, text='9', bg='#006633', fg='#000000')
+number9.pack(side=LEFT, padx=BUTTONXPAD)
+number9.config(width=3, font=('Courier', 24))
+
+subtract = Button(row2, text='-', bg='#006633', fg='#000000')
+subtract.pack(side=LEFT, padx=BUTTONXPAD)
+subtract.config(width=3, font=('Courier', 24))
+
+
+# Third row of buttons
+row3 = Frame(window, background=BGCOLOR)
+row3.pack(side=TOP, pady=10, padx=5, fill=X)
+
+number4 = Button(row3, text='4', bg='#006633', fg='#000000')
+number4.pack(side=LEFT, padx=BUTTONXPAD)
+number4.config(width=3, font=('Courier', 24))
+
+number5 = Button(row3, text='5', bg='#006633', fg='#000000')
+number5.pack(side=LEFT, padx=BUTTONXPAD)
+number5.config(width=3, font=('Courier', 24))
+
+number6 = Button(row3, text='6', bg='#006633', fg='#000000')
+number6.pack(side=LEFT, padx=BUTTONXPAD)
+number6.config(width=3, font=('Courier', 24))
+
+multiply = Button(row3, text='*', bg='#006633', fg='#000000')
+multiply.pack(side=LEFT, padx=BUTTONXPAD)
+multiply.config(width=3, font=('Courier', 24))
+
+
+# Fourth row of buttons
+row4 = Frame(window, background=BGCOLOR)
+row4.pack(side=TOP, pady=10, padx=5, fill=X)
+
+number1 = Button(row4, text='1', bg='#006633', fg='#000000')
+number1.pack(side=LEFT, padx=BUTTONXPAD)
+number1.config(width=3, font=('Courier', 24))
+
+number2 = Button(row4, text='2', bg='#006633', fg='#000000')
+number2.pack(side=LEFT, padx=BUTTONXPAD)
+number2.config(width=3, font=('Courier', 24))
+
+number3 = Button(row4, text='3', bg='#006633', fg='#000000')
+number3.pack(side=LEFT, padx=BUTTONXPAD)
+number3.config(width=3, font=('Courier', 24))
+
+divide = Button(row4, text='÷', bg='#006633', fg='#000000')
+divide.pack(side=LEFT, padx=BUTTONXPAD)
+divide.config(width=3, font=('Courier', 24))
+
+
+# Fifth (and last) row of buttons
+row5 = Frame(window, background=BGCOLOR)
+row5.pack(side=TOP, pady=10, padx=5, fill=X)
+
+off = Button(row5, text='OFF', bg='#006633', fg='#000000')
+off.pack(side=LEFT, padx=BUTTONXPAD)
+off.config(width=3, font=('Courier', 24))
+
+number0 = Button(row5, text='0', bg='#006633', fg='#000000')
+number0.pack(side=LEFT, padx=BUTTONXPAD)
+number0.config(width=3, font=('Courier', 24))
+
+decimal = Button(row5, text='.', bg='#006633', fg='#000000')
+decimal.pack(side=LEFT, padx=BUTTONXPAD)
+decimal.config(width=3, font=('Courier', 24))
+
+equals = Button(row5, text='=', bg='#006633', fg='#000000')
+equals.pack(side=LEFT, padx=BUTTONXPAD)
+equals.config(width=3, font=('Courier', 24))
 
 # Escape key closes the program
 def exit(event):
