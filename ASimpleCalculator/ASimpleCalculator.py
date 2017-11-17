@@ -27,12 +27,14 @@ window.geometry(SIZE) # Sets the size of the window
 window.configure(background=BGCOLOR)
 window.lift()
 
-answer = ' ' 
+answer = 0
 answerLabelVar = StringVar()
-answerLabelVar.set(str(answer))
+answerLabelVar.set(' ')
 
-var1 = 0
+var1 = None
+var2 = 0
 operation = ''
+calculated = False
 
 answerFrame = Frame(window)
 answerFrame.pack(side=TOP, pady=15)
@@ -68,27 +70,60 @@ def clear():
     global answer
     global var1
     global answerLabelVar
-    answer = ' '
-    answerLabelVar.set(str(answer))
-    var1 = 0
+    global calculated
+    calculated = False
+    answer = 0
+    answerLabelVar.set(' ')
+    var1 = None
 
 def calculate():
     global answer
     global var1
     global operation
     global answerLabelVar
+    global calculated
     if operation == 'add':
         answer += var1
-    var1 = 0
+        var1 = answer
+        calculated = True
+        print ('VAR1: ', var1)
+    elif operation == 'minus':
+        answer = var1 - answer
+        var1 = answer
+        answer = var1
+        print ('VAR1: ', var1)
+        calculated = True
     answerLabelVar.set(str(answer))
+    print('FINAL ANSWER: ', answer)
 
 def add():
     global answer
     global var1
     global operation
-    var1 += int(answer)
+    global calculated
+    if var1 == None:
+        var1 = 0
+    if calculated == False:
+        var1 += int(answer)
+    else:
+        calculate == False
     answer = 0
     operation = 'add'
+    print('var1: ', var1)
+
+def subtract():
+    global answer
+    global var1
+    global operation
+    global calculated
+    if var1 == None:
+        var1 = int(answer)
+    elif calculated == False:
+        var1 -= int(answer)
+    else:
+        calculated = False
+    answer = 0
+    operation = 'minus'
     print('var1: ', var1)
 
 # First row of buttons
@@ -128,7 +163,7 @@ number9 = Button(row2, text='9', bg='#006633', fg='#000000', activebackground=BG
 number9.pack(side=LEFT, padx=BUTTONXPAD)
 number9.config(width=3, font=('Courier', 24))
 
-subtract = Button(row2, text='-', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000')
+subtract = Button(row2, text='-', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=subtract)
 subtract.pack(side=LEFT, padx=BUTTONXPAD)
 subtract.config(width=3, font=('Courier', 24))
 
