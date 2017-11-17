@@ -60,11 +60,12 @@ window.bind('<Escape>', exit)
 def appendDigit(num):
     global answer
     global answerLabelVar
-    ansString = str(answer)
-    answer = ansString + str(num)
-    answer = int(answer)
-    answerLabelVar.set(str(answer))
-    print (answer)
+    if len(str(answer)) <= 8: # Prevents entering number from going past the digit limit
+        ansString = str(answer)
+        answer = ansString + str(num)
+        answer = int(answer)
+        answerLabelVar.set(str(answer))
+        print (answer)
 
 # Clears the answer box (and basically resets the entire calculator)
 def clear():
@@ -106,7 +107,13 @@ def calculate():
         answer = var1
         print ('VAR1: ', var1)
         calculated = True
-    answerLabelVar.set(str(answer))
+    if len(str(answer)) <= 8:
+        answerLabelVar.set(str(answer))
+    else:
+        answerLabelVar.set('# TOO BIG')
+        answer = 0
+        var1 = None
+        calculated = False
     print('FINAL ANSWER: ', answer)
 
 # Adds
@@ -173,17 +180,31 @@ def divide():
     operation = 'divide'
     print('var1: ', var1)
 
+# Square Number
+def square():
+    global answer
+    global answerLabelVar
+    answer *= answer
+    answerLabelVar.set(str(answer))
+
+# Square Root
+def squarert():
+    global answer
+    global answerLabelVar
+    answer = sqrt(answer)
+    answerLabelVar.set(str(answer))
+
 # First row of buttons
 row1 = Frame(window, background=BGCOLOR)
 row1.pack(side=TOP, pady=2, padx=5, fill=X)
 
 # Square root
-squareroot = Button(row1, text='√', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000')
+squareroot = Button(row1, text='√', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=squarert)
 squareroot.pack(side=LEFT, padx=BUTTONXPAD)
 squareroot.config(width=3, font=('Courier', 24))
 
 # Square
-square = Button(row1, text='x^2', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000')
+square = Button(row1, text='x^2', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=square)
 square.pack(side=LEFT, padx=BUTTONXPAD)
 square.config(width=3, font=('Courier', 24))
 
