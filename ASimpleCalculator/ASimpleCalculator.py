@@ -32,6 +32,11 @@ window.configure(background=BGCOLOR) # Sets the background color
 window.lift() # Makes sure the window is at the top of the screen
 
 #
+# ----------------- BACKGROUND --------------
+#
+
+
+#
 # ----------------- VARIABLES ------------------------
 #
 
