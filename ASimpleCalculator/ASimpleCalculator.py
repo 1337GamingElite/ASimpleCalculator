@@ -1,18 +1,22 @@
 # A Simple Calculator
+# A program that does basic math for you
 # Made By: John M.
 
-# These libraries allow the UI and window to be made
-from tkinter import *
+from tkinter import * # The foundation of this program (allows the user interface AKA UI to be made)
 from tkinter import ttk # Library adds widgets which can be added to the window
-
-from math import sqrt
+from math import sqrt # Square root function
 
 print ("""
 A Simple Calculator
+A program that does basic math for you
 By: John M.
 """)
 
-# Important Variables
+#
+# ---------------- WINDOW CREATION -------------------
+#
+
+# Window and UI Variables
 TITLE = 'A Simple Calculator'
 SIZE = '320x500'
 BUTTONYPAD = 5
@@ -20,12 +24,16 @@ BUTTONXPAD = 5
 BGCOLOR = '#6b624b'
 
 # Creates a window 
-window = Tk()
+window = Tk() # Window object
 window.title(TITLE) # Sets the title of window
 window.resizable(width=False, height=False) # Disables resizeing
 window.geometry(SIZE) # Sets the size of the window
 window.configure(background=BGCOLOR) # Sets the background color
 window.lift() # Makes sure the window is at the top of the screen
+
+#
+# ----------------- VARIABLES ------------------------
+#
 
 answer = 0 # The current value in the box
 answerLabelVar = StringVar() # The variable responsible for changing the value in the label
@@ -35,13 +43,20 @@ var1 = None # The first number in the equation
 operation = '' # Identifies the current operation being done (used for the calcualate function)
 calculated = False # Sets to True if the equals sign has been pressed previously (fixes some bugs)
 
+#
+# --------------- THE ANSWER BOX -----------------
+#
+
 answerFrame = Frame(window) # The frame which contains the answer label
 answerFrame.pack(side=TOP, pady=15) # Positions the frame
 
-# The answer box
 answerBox = Label(answerFrame, textvariable = answerLabelVar, borderwidth=2, relief='groove', anchor='e', bg='#006633', fg='#000000') # Can display 9 digits
 answerBox.pack(side=TOP) 
 answerBox.config(width=9, font=('Courier', 42)) # Styling
+
+#
+# ------------------- FUNCTIONS -----------------
+#
 
 ''' A test function used during development
 def test():
@@ -50,21 +65,19 @@ def test():
     answer += 1
     answerLabelVar.set(str(answer))
 '''
-# Escape key closes the program
+# Exits the program (OFF button or Escape key)
 def exit(event=None):
     print ('Exiting...')
     sys.exit()
-window.bind('<Escape>', exit)
 
 # Used to add digits to the end of the number
-def appendDigit(num):
+def appendDigit(num, event=None):
     global answer
     global answerLabelVar
     global calculated
     global var1
     if calculated == True:
         answer = 0
-        var1 = None
         answerLabelVar.set('')
         calculated = False
     if len(str(answer)) <= 8: # Prevents entering number from going past the digit limit
@@ -86,7 +99,7 @@ def clear():
     var1 = None
 
 # Calculates the equation
-def calculate():
+def calculate(event = None):
     global answer
     global var1
     global operation
@@ -124,7 +137,7 @@ def calculate():
     print('FINAL ANSWER: ', answer)
 
 # Adds
-def add():
+def add(event = None):
     global answer
     global var1
     global operation
@@ -140,7 +153,7 @@ def add():
     print('var1: ', var1)
 
 # Subtracts
-def subtract():
+def subtract(event = None):
     global answer
     global var1
     global operation
@@ -156,7 +169,7 @@ def subtract():
     print('var1: ', var1)
 
 # Multiplies
-def multiply():
+def multiply(event = None):
     global answer
     global var1
     global operation
@@ -172,7 +185,7 @@ def multiply():
     print('var1: ', var1)
 
 # Divides
-def divide():
+def divide(event = None):
     global answer
     global var1
     global operation
@@ -190,16 +203,56 @@ def divide():
 # Square Number
 def square():
     global answer
+    global var1
     global answerLabelVar
+    global calculated
     answer *= answer
+    var1 = answer
+    calculated = True
     answerLabelVar.set(str(answer))
 
 # Square Root
 def squarert():
     global answer
     global answerLabelVar
-    answer = sqrt(answer)
+    global var1
+    global calculated 
+    # NOTE: THE CURRENT SYSTEM DOES NOT WORK WELL 
+    #       WITH DECIMALS SO IT CONVERTS IT TO INTEGERS
+    answer = int(sqrt(answer))
+    var1 = answer
+    calculated = True
     answerLabelVar.set(str(answer))
+
+#
+# ------------- KEY BINDS ---------------------
+#
+
+window.bind('<Escape>', exit) # Exits program
+
+# Number Keys
+window.bind('1', lambda event: appendDigit(1))
+window.bind('2', lambda event: appendDigit(2))
+window.bind('3', lambda event: appendDigit(3))
+window.bind('4', lambda event: appendDigit(4))
+window.bind('5', lambda event: appendDigit(5))
+window.bind('6', lambda event: appendDigit(6))
+window.bind('7', lambda event: appendDigit(7))
+window.bind('8', lambda event: appendDigit(8))
+window.bind('9', lambda event: appendDigit(9))
+window.bind('0', lambda event: appendDigit(0))
+
+# Operations
+window.bind('+', add) # Add
+window.bind('-', subtract) # Subtract
+window.bind('*', multiply) # Multiply
+window.bind('/', divide) # Divide
+
+window.bind('<Return>', calculate) # Calculate
+
+#
+# ------------- BUTTONS ---------------------
+#
 
 # First row of buttons
 row1 = Frame(window, background=BGCOLOR)
