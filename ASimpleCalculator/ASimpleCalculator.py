@@ -93,6 +93,11 @@ def calculate():
         answer = var1
         print ('VAR1: ', var1)
         calculated = True
+    elif operation == 'mult':
+        answer *= var1
+        var1 = answer
+        calculate = True
+        print ('VAR1: ', var1)
     answerLabelVar.set(str(answer))
     print('FINAL ANSWER: ', answer)
 
@@ -124,6 +129,21 @@ def subtract():
         calculated = False
     answer = 0
     operation = 'minus'
+    print('var1: ', var1)
+
+def multiply():
+    global answer
+    global var1
+    global operation
+    global calculated
+    if var1 == None:
+        var1 = int(answer)
+    elif calculated == False:
+        var1 *= int(answer)
+    else:
+        calculated == False
+    answer = 0
+    operation = 'mult'
     print('var1: ', var1)
 
 # First row of buttons
@@ -184,7 +204,7 @@ number6 = Button(row3, text='6', bg='#006633', fg='#000000', activebackground=BG
 number6.pack(side=LEFT, padx=BUTTONXPAD)
 number6.config(width=3, font=('Courier', 24))
 
-multiply = Button(row3, text='*', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000')
+multiply = Button(row3, text='*', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=multiply)
 multiply.pack(side=LEFT, padx=BUTTONXPAD)
 multiply.config(width=3, font=('Courier', 24))
 
