@@ -60,6 +60,13 @@ window.bind('<Escape>', exit)
 def appendDigit(num):
     global answer
     global answerLabelVar
+    global calculated
+    global var1
+    if calculated == True:
+        answer = 0
+        var1 = None
+        answerLabelVar.set('')
+        calculated = False
     if len(str(answer)) <= 8: # Prevents entering number from going past the digit limit
         ansString = str(answer)
         answer = ansString + str(num)
