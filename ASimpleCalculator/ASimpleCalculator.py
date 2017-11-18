@@ -21,7 +21,7 @@ TITLE = 'A Simple Calculator'
 SIZE = '320x500'
 BUTTONYPAD = 5
 BUTTONXPAD = 5
-BGCOLOR = '#6b624b'
+BGCOLOR = '#FFF0A5'
 
 # Creates a window 
 window = Tk() # Window object
@@ -30,11 +30,6 @@ window.resizable(width=False, height=False) # Disables resizeing
 window.geometry(SIZE) # Sets the size of the window
 window.configure(background=BGCOLOR) # Sets the background color
 window.lift() # Makes sure the window is at the top of the screen
-
-#
-# ----------------- BACKGROUND --------------
-#
-
 
 #
 # ----------------- VARIABLES ------------------------
@@ -55,7 +50,7 @@ calculated = False # Sets to True if the equals sign has been pressed previously
 answerFrame = Frame(window) # The frame which contains the answer label
 answerFrame.pack(side=TOP, pady=15) # Positions the frame
 
-answerBox = Label(answerFrame, textvariable = answerLabelVar, borderwidth=2, relief='groove', anchor='e', bg='#006633', fg='#000000') # Can display 9 digits
+answerBox = Label(answerFrame, textvariable = answerLabelVar, borderwidth=2, relief='groove', anchor='e', bg='#FFB03B', fg='#000000') # Can display 9 digits
 answerBox.pack(side=TOP) 
 answerBox.config(width=9, font=('Courier', 42)) # Styling
 
@@ -127,7 +122,14 @@ def calculate(event = None):
         calculated = True
         print ('VAR1: ', var1)
     elif operation == 'divide':
-        answer = var1 / answer
+        try:
+            answer = var1 / answer
+            if var1.is_integer():
+                var1 = int(var1)
+            if answer.is_integer():
+                answer = int(answer)
+        except ZeroDivisionError:
+            print('You Cannot Divide By Zero')
         var1 = answer
         answer = var1
         print ('VAR1: ', var1)
@@ -198,8 +200,13 @@ def divide(event = None):
     if var1 == None:
         var1 = int(answer)
     elif calculated == False:
-        var1 /= float(answer)
-    else: 
+        try:
+            var1 /= float(answer)
+        except ZeroDivisionError:
+            print('You Cannot Divide By Zero')
+        if var1.is_Integer():
+            print ('Meme')
+    else:
         calculated == False
     answer = 0
     operation = 'divide'
@@ -224,10 +231,16 @@ def squarert():
     global calculated 
     # NOTE: THE CURRENT SYSTEM DOES NOT WORK WELL 
     #       WITH DECIMALS SO IT CONVERTS IT TO INTEGERS
-    answer = int(sqrt(answer))
+    answer = sqrt(answer)
     var1 = answer
     calculated = True
-    answerLabelVar.set(str(answer))
+    if len(str(answer)) <= 8:
+        answerLabelVar.set(str(answer))
+    else:
+        answerLabelVar.set('# TOO BIG')
+        answer = 0
+        var1 = None
+        calculated = False
 
 #
 # ------------- KEY BINDS ---------------------
@@ -264,22 +277,22 @@ row1 = Frame(window, background=BGCOLOR)
 row1.pack(side=TOP, pady=2, padx=5, fill=X)
 
 # Square root
-squareroot = Button(row1, text='√', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=squarert)
+squareroot = Button(row1, text='√', bg='#B64926', fg='#000000', activebackground='#8E2800', activeforeground='#000000', command=squarert)
 squareroot.pack(side=LEFT, padx=BUTTONXPAD)
 squareroot.config(width=3, font=('Courier', 24))
 
 # Square
-square = Button(row1, text='x^2', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=square)
+square = Button(row1, text='x^2', bg='#B64926', fg='#000000', activebackground='#8E2800', activeforeground='#000000', command=square)
 square.pack(side=LEFT, padx=BUTTONXPAD)
 square.config(width=3, font=('Courier', 24))
 
 # Clear
-clear = Button(row1, text='C', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=clear)
+clear = Button(row1, text='C', bg='#B64926', fg='#000000', activebackground='#8E2800', activeforeground='#000000', command=clear)
 clear.pack(side=LEFT, padx=BUTTONXPAD)
 clear.config(width=3, font=('Courier', 24))
 
 # Addition
-add = Button(row1, text='+', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=add)
+add = Button(row1, text='+', bg='#B64926', fg='#000000', activebackground='#8E2800', activeforeground='#000000', command=add)
 add.pack(side=LEFT, padx=BUTTONXPAD)
 add.config(width=3, font=('Courier', 24))
 
@@ -289,22 +302,22 @@ row2 = Frame(window, background=BGCOLOR)
 row2.pack(side=TOP, pady=10, padx=5, fill=X)
 
 # 7
-number7 = Button(row2, text='7', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=lambda: appendDigit(7))
+number7 = Button(row2, text='7', bg='#B64926', fg='#000000', activebackground='#8E2800', activeforeground='#000000', command=lambda: appendDigit(7))
 number7.pack(side=LEFT, padx=BUTTONXPAD)
 number7.config(width=3, font=('Courier', 24))
 
 # 8
-number8 = Button(row2, text='8', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=lambda: appendDigit(8))
+number8 = Button(row2, text='8', bg='#B64926', fg='#000000', activebackground='#8E2800', activeforeground='#000000', command=lambda: appendDigit(8))
 number8.pack(side=LEFT, padx=BUTTONXPAD)
 number8.config(width=3, font=('Courier', 24))
 
 # 9
-number9 = Button(row2, text='9', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=lambda: appendDigit(9))
+number9 = Button(row2, text='9', bg='#B64926', fg='#000000', activebackground='#8E2800', activeforeground='#000000', command=lambda: appendDigit(9))
 number9.pack(side=LEFT, padx=BUTTONXPAD)
 number9.config(width=3, font=('Courier', 24))
 
 # Subtraction
-subtract = Button(row2, text='-', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=subtract)
+subtract = Button(row2, text='-', bg='#B64926', fg='#000000', activebackground='#8E2800', activeforeground='#000000', command=subtract)
 subtract.pack(side=LEFT, padx=BUTTONXPAD)
 subtract.config(width=3, font=('Courier', 24))
 
@@ -314,22 +327,22 @@ row3 = Frame(window, background=BGCOLOR)
 row3.pack(side=TOP, pady=10, padx=5, fill=X)
 
 # 4
-number4 = Button(row3, text='4', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=lambda: appendDigit(4))
+number4 = Button(row3, text='4', bg='#B64926', fg='#000000', activebackground='#8E2800', activeforeground='#000000', command=lambda: appendDigit(4))
 number4.pack(side=LEFT, padx=BUTTONXPAD)
 number4.config(width=3, font=('Courier', 24))
 
 # 5
-number5 = Button(row3, text='5', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=lambda: appendDigit(5))
+number5 = Button(row3, text='5', bg='#B64926', fg='#000000', activebackground='#8E2800', activeforeground='#000000', command=lambda: appendDigit(5))
 number5.pack(side=LEFT, padx=BUTTONXPAD)
 number5.config(width=3, font=('Courier', 24))
 
 # 6
-number6 = Button(row3, text='6', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=lambda: appendDigit(6))
+number6 = Button(row3, text='6', bg='#B64926', fg='#000000', activebackground='#8E2800', activeforeground='#000000', command=lambda: appendDigit(6))
 number6.pack(side=LEFT, padx=BUTTONXPAD)
 number6.config(width=3, font=('Courier', 24))
 
 # Multiplication
-multiply = Button(row3, text='*', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=multiply)
+multiply = Button(row3, text='*', bg='#B64926', fg='#000000', activebackground='#8E2800', activeforeground='#000000', command=multiply)
 multiply.pack(side=LEFT, padx=BUTTONXPAD)
 multiply.config(width=3, font=('Courier', 24))
 
@@ -339,22 +352,22 @@ row4 = Frame(window, background=BGCOLOR)
 row4.pack(side=TOP, pady=10, padx=5, fill=X)
 
 # 1
-number1 = Button(row4, text='1', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=lambda: appendDigit(1))
+number1 = Button(row4, text='1', bg='#B64926', fg='#000000', activebackground='#8E2800', activeforeground='#000000', command=lambda: appendDigit(1))
 number1.pack(side=LEFT, padx=BUTTONXPAD)
 number1.config(width=3, font=('Courier', 24))
 
 # 2
-number2 = Button(row4, text='2', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=lambda: appendDigit(2))
+number2 = Button(row4, text='2', bg='#B64926', fg='#000000', activebackground='#8E2800', activeforeground='#000000', command=lambda: appendDigit(2))
 number2.pack(side=LEFT, padx=BUTTONXPAD)
 number2.config(width=3, font=('Courier', 24))
 
 # 3
-number3 = Button(row4, text='3', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=lambda: appendDigit(3))
+number3 = Button(row4, text='3', bg='#B64926', fg='#000000', activebackground='#8E2800', activeforeground='#000000', command=lambda: appendDigit(3))
 number3.pack(side=LEFT, padx=BUTTONXPAD)
 number3.config(width=3, font=('Courier', 24))
 
 # Division
-divide = Button(row4, text='÷', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=divide)
+divide = Button(row4, text='÷', bg='#B64926', fg='#000000', activebackground='#8E2800', activeforeground='#000000', command=divide)
 divide.pack(side=LEFT, padx=BUTTONXPAD)
 divide.config(width=3, font=('Courier', 24))
 
@@ -364,22 +377,22 @@ row5 = Frame(window, background=BGCOLOR)
 row5.pack(side=TOP, pady=10, padx=5, fill=X)
 
 # Off button
-off = Button(row5, text='OFF', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=exit)
+off = Button(row5, text='OFF', bg='#B64926', fg='#000000', activebackground='#8E2800', activeforeground='#000000', command=exit)
 off.pack(side=LEFT, padx=BUTTONXPAD)
 off.config(width=3, font=('Courier', 24))
 
 # 0
-number0 = Button(row5, text='0', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=lambda: appendDigit(0))
+number0 = Button(row5, text='0', bg='#B64926', fg='#000000', activebackground='#8E2800', activeforeground='#000000', command=lambda: appendDigit(0))
 number0.pack(side=LEFT, padx=BUTTONXPAD)
 number0.config(width=3, font=('Courier', 24))
 
 # Add decimal
-decimal = Button(row5, text='.', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000')
+decimal = Button(row5, text='.', bg='#B64926', fg='#000000', activebackground='#8E2800', activeforeground='#000000')
 decimal.pack(side=LEFT, padx=BUTTONXPAD)
 decimal.config(width=3, font=('Courier', 24))
 
 # Equals
-equals = Button(row5, text='=', bg='#006633', fg='#000000', activebackground=BGCOLOR, activeforeground='#000000', command=calculate)
+equals = Button(row5, text='=', bg='#B64926', fg='#000000', activebackground='#8E2800', activeforeground='#000000', command=calculate)
 equals.pack(side=LEFT, padx=BUTTONXPAD)
 equals.config(width=3, font=('Courier', 24))
 
