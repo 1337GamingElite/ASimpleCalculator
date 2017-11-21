@@ -3,7 +3,6 @@
 # Made By: John M.
 
 from tkinter import * # The foundation of this program (allows the user interface AKA UI to be made)
-from tkinter import ttk # Library adds widgets which can be added to the window
 from math import sqrt # Square root function
 
 print ("""
@@ -38,6 +37,7 @@ window.resizable(width=False, height=False) # Disables resizeing
 window.geometry(SIZE) # Sets the size of the window
 window.configure(background=colours['bgcolor']) # Sets the background color
 window.lift() # Makes sure the window is at the top of the screen
+window.attributes("-topmost", True)
 
 #
 # ----------------- VARIABLES ------------------------
@@ -142,6 +142,8 @@ def calculate(event = None):
         answer = var1
         print ('VAR1: ', var1)
         calculated = True
+    if float(answer).is_integer():
+        answer = int(answer)
     if len(str(answer)) <= 8:
         answerLabelVar.set(str(answer))
     else:
@@ -212,8 +214,8 @@ def divide(event = None):
             var1 /= float(answer)
         except ZeroDivisionError:
             print('You Cannot Divide By Zero')
-        if var1.is_Integer():
-            print ('Meme')
+        if float(var1).is_integer():
+            var1 = int(var1)
     else:
         calculated == False
     answer = 0
@@ -236,11 +238,13 @@ def squarert():
     global answer
     global answerLabelVar
     global var1
-    global calculated 
-    # NOTE: THE CURRENT SYSTEM DOES NOT WORK WELL 
-    #       WITH DECIMALS SO IT CONVERTS IT TO INTEGERS
+    global calculated
     answer = sqrt(answer)
     var1 = answer
+    if float(answer).is_integer():
+        answer = int(answer)
+    if float(var1).is_integer():
+        var1 = int(answer)
     calculated = True
     if len(str(answer)) <= 8:
         answerLabelVar.set(str(answer))
@@ -249,6 +253,12 @@ def squarert():
         answer = 0
         var1 = None
         calculated = False
+
+def switchsign():
+    global answer
+    global answerLabelVar
+    answer = -answer
+    answerLabelVar.set(str(answer))
 
 #
 # ------------- KEY BINDS ---------------------
@@ -394,9 +404,14 @@ number0 = Button(row5, text='0', bg=colours['main'], fg=colours['text'], activeb
 number0.pack(side=LEFT, padx=BUTTONXPAD)
 number0.config(width=3, font=('Courier', 24))
 
+# Switch Sign
+equals = Button(row5, text='+/-', bg=colours['main'], fg=colours['text'], activebackground=colours['click'], activeforeground=colours['text'], command=switchsign)
+equals.pack(side=LEFT, padx=BUTTONXPAD)
+equals.config(width=3, font=('Courier', 24))
+
 # Equals
 equals = Button(row5, text='=', bg=colours['main'], fg=colours['text'], activebackground=colours['click'], activeforeground=colours['text'], command=calculate)
 equals.pack(side=LEFT, padx=BUTTONXPAD)
-equals.config(width=8, font=('Courier', 24))
+equals.config(width=3, font=('Courier', 24))
 
 window.mainloop() # Keeps looping the window (prevents it from closing)
